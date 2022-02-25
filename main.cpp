@@ -1,40 +1,75 @@
 #include <iostream>
-#include<fstream>
+#include <fstream>
+#include  <string.h>
 using namespace std;
-     fstream inputFile;
-     char path[]="data.txt";
-class teacher{
-    public:
-     string name,exp,sub;
-};
-     void Tdata(teacher Teacher){
-    inputFile.open(path,ios::out|ios::app);
-    cout<<"endl";
-     inputFile<<Teacher.name<<"\t\t"<<Teacher.exp<<"\t\t"<<Teacher.sub<<endl;
-     inputFile.close();
-     }
- int main(){
-     cout<<"Who are you"<<endl<<
-    "1.teacher?\n"<< "2.Student\n"<<"3.parent\n";
-   int choose,ID=121316; cin>>choose;
-          switch(choose){
-   case 1:
-     teacher t;
+ class teacher{
+     public:
+void  Tdata()
+{
+    char name [25];
+    char sub[25];
+    char exp [25];
+    fstream data;
+    data.open("data.txt", ios::app);
+    cin.ignore();
+    cout<<" \n name : ";
+    cin.getline(name,25);
+    cout<<" \n sub : ";
+    cin.getline(sub,25);
+    cout<<" \n exp : ";
+    cin.getline(exp,25);
+    data<< name<<'|'<<sub<<'|'<<exp<<'\n';
+    data.close();
+}};
+ class student{
+     public:
+void showData()
+{
+   fstream data;
+    data.open("data.txt",ios::in);
+    char name [25];
+    char sub[25];
+    char exp[25];
+    char a[25];
+    cout<<" \n  subject you search for : ";
+    cin.ignore();
+    cin.getline(a,25);
+    int l=0;
+    cout<< " \n\t name \t sub \t exp \n";
+    while(!data.eof())
+    {
+        data.getline(name,25,'|');
+        data.getline(sub,25,'|');
+        data.getline(exp,25);
+        if(strcmp(sub, a)==0)
+        {cout<< "\n\t"<< name << "\t"<<sub<<"\t"<<exp<<endl;
+            l=1;}
+      }
+    if(l==0)
+    {
+        cout<<" \n not found";
+    }
+    data.close();
+}};
 
-     cout<<"ur name: "; cin>>t.name;
-     cout<<"ur experience: "; cin>>t.exp;
-     cout<<"subject you teach:"; cin>>t.sub;
-     Tdata(t);
-      break;}
-  /* case 2:
-       cout<<"ur name:";
-       cout<<"which course:";
-       cout<<"ur ID is:"<<ID;
-       ID++;
-       int nm,co; cin>>name>>co;
+int main()
+{
+        cout << "Who are u?\n"<<"1.teacher\n"<<"2.student\n"<<"3.parent\n";
+        int option;
+        cin>>option;
+        switch (option)
+        {
+        case 1 :
+            teacher Teacher;
+            Teacher.Tdata();
+            break;
+        case 2 :
+            student Student;
+            Student.showData();
+            break;
 
-    case 3:
-            cout<<"ur son’s ID:";*/
-
+        default :
+            cout << " \n choose a correct number";
+    }
     return 0;
 }
